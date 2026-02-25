@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Algorithme – Examens & Corrections</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bleu:#2071b3;
+  --bleu-fonce:#154a79;
+  --marron:#8b5a2b;
+  --beige:#f5e9d7;
+  --texte:#2b2b2b;
+}
+body{
+  font-family:'Inter',sans-serif;
+  background:#f2e7d8;
+  color:var(--texte);
+  padding:15px;
+}
+
+/* TITRES */
+h1{
+  text-align:center;
+  font-size:42px;
+  color:var(--bleu-fonce);
+  margin:20px 0 10px;
+}
+.intro{
+  max-width:800px;
+  margin:0 auto 40px;
+  text-align:center;
+  font-size:18px;
+  line-height:1.7;
+  color:#444;
+}
+
+h2{
+  text-align:center;
+  font-size:34px;
+  color:var(--marron);
+  margin:50px 0 10px;
+}
+.sous-texte{
+  max-width:750px;
+  margin:0 auto 25px;
+  text-align:center;
+  font-size:17px;
+  line-height:1.6;
+  color:#555;
+}
+
+/* GRILLE VERTICALE */
+.grille-verticale{
+  display:flex;
+  flex-direction:column;
+  gap:25px;
+  max-width:650px;
+  margin:0 auto 50px;
+  padding:30px;
+  background:#fff;
+  border-radius:25px;
+  border:4px solid var(--bleu);
+  box-shadow:0 15px 60px rgba(0,0,0,.25);
+}
+
+.grille-verticale img{
+  width:100%;
+  height:280px;
+  object-fit:cover;
+  border-radius:16px;
+  border:4px solid var(--bleu);
+  cursor:pointer;
+  transition:.3s;
+}
+.grille-verticale img:hover{
+  transform:scale(1.05);
+  box-shadow:0 20px 40px rgba(0,0,0,.5);
+}
+
+/* RETOUR */
+.retour{
+  text-align:center;
+  margin:40px 0;
+}
+.retour a{
+  text-decoration:none;
+  font-weight:600;
+  font-size:22px;
+  color:var(--marron);
+  background:var(--beige);
+  padding:20px 45px;
+  border-radius:30px;
+  border:3px solid var(--marron);
+  display:inline-block;
+  transition:.3s;
+}
+.retour a:hover{
+  background:var(--marron);
+  color:#fff;
+}
+
+/* MODAL ZOOM */
+#modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.95);
+  z-index:999;
+  justify-content:center;
+  align-items:center;
+}
+#modal img{
+  max-width:95%;
+  max-height:90vh;
+  border-radius:20px;
+}
+#modal button{
+  position:absolute;
+  bottom:30px;
+  background:var(--bleu);
+  color:#fff;
+  border:none;
+  padding:15px 45px;
+  border-radius:35px;
+  font-size:20px;
+  cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<h1>Analyse</h1>
+<p class="intro">
+  Cette section regroupe les différentes épreuves liées à cette matière.
+  Elle permet aux étudiants de s’entraîner, de revoir les notions essentielles vues en cours
+  et de mieux se préparer aux évaluations à travers des sujets concrets.
+</p>
+
+<!-- ================= EXAMENS ================= -->
+<h2>Examens</h2>
+<p class="sous-texte">
+  Vous trouverez ici les sujets d’examens et d’évaluations proposés pour cette matière.
+  Ces épreuves permettent d’apprécier la compréhension des notions fondamentales,
+  la capacité de raisonnement et l’application correcte des connaissances acquises.
+</p>
+
+<div class="grille-verticale">
+    <img src="analyse1.jpg.jpeg" onclick="agrandir(this.src)">
+  </div>
+  
+<div class="retour">
+  <a href="nyquist.html">← Retour aux matières</a>
+</div>
+
+<!-- MODAL -->
+<div id="modal" onclick="fermer()">
+  <img id="modalImg">
+  <button onclick="fermer()">Fermer ×</button>
+</div>
+
+<script>
+function agrandir(src){
+  const modal=document.getElementById("modal");
+  const img=document.getElementById("modalImg");
+  img.src=src;
+  modal.style.display="flex";
+}
+function fermer(){
+  document.getElementById("modal").style.display="none";
+}
+</script>
+
+</body>
+</html>

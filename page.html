@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UADB HELP</title>
+
+<style>
+
+/* ================= RESET ================= */
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Segoe UI',sans-serif;
+}
+
+html{
+  font-size:16px;
+}
+
+body{
+  height:100vh;
+  background:#000;
+  overflow-x:hidden;
+}
+
+/* ================= INTRO ================= */
+.intro-container{
+  position:fixed;
+  inset:0;
+  background:#000;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  z-index:10;
+  animation:introHide .8s ease forwards;
+  animation-delay:8s;
+}
+.black-screen{
+  position:absolute;
+  inset:0;
+  background:#000;
+  animation:fadeOut .5s 2.5s forwards;
+}
+
+.light-flare{
+  position:absolute;
+  width:400px;
+  height:400px;
+  background:radial-gradient(circle, rgba(200,160,60,.4), transparent 70%);
+  border-radius:50%;
+  opacity:0;
+  animation:
+    flareAppear .5s 1s forwards,
+    flarePulse 2s 1.5s infinite alternate,
+    fadeOut .5s 3.8s forwards;
+}
+
+.university-logo{
+  width:180px;
+  height:180px;
+  opacity:0;
+  animation:
+    logoEntrance 1.2s .5s forwards,
+    logoScaleUp 1s 1.8s forwards,
+    logoPulse 1.5s 2.8s ease-in-out,
+    fadeOut .8s 4.5s forwards;
+}
+
+.university-logo img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+}
+
+.logo-breakup{
+  position:absolute;
+  width:180px;
+  height:180px;
+  opacity:0;
+  animation:breakAppear .1s 4s forwards;
+}
+
+.break-line{
+  position:absolute;
+  background:#fff;
+  animation:breakLine .8s 4.1s forwards;
+}
+
+.line-v{width:2px;height:100%}
+.line-h{height:2px;width:100%}
+
+.line1{left:20%} .line2{left:40%}
+.line3{left:60%} .line4{left:80%}
+.line5{top:20%} .line6{top:40%}
+.line7{top:60%} .line8{top:80%}
+
+.homepage{
+  position:absolute;
+  inset:0;
+  background:linear-gradient(135deg,#1a232f 0%,#01132b 50%,#0f335e 100%);
+  opacity:0;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  color:white;
+  z-index:1;
+  animation:fadeIn 4.5s 5s forwards;
+  padding:20px;
+  text-align:center;
+}
+
+.homepage h1{
+  font-size:clamp(2rem,6vw,3.5rem);
+  margin-bottom:15px;
+  opacity:0;
+  animation:slideUp 1.5s 5.5s forwards;
+  color:burlywood;
+}
+
+.homepage .subtitle{
+  font-size:clamp(1.2rem,4vw,1.8rem);
+  opacity:0;
+  animation:slideUp 1.5s 5.8s forwards;
+}
+
+.homepage .motto{
+  font-size:clamp(1rem,3.5vw,1.5rem);
+  opacity:0;
+  animation:slideUp 1.5s 6.1s forwards;
+  color:burlywood;
+  font-style:italic;
+  max-width:800px;
+  line-height:1.6;
+  padding:20px;
+  border-top:2px solid rgba(255,215,0,.3);
+  border-bottom:2px solid rgba(255,215,0,.3);
+}
+
+.main-app{
+  position:fixed;
+  inset:0;
+  background:url("logo uad.png") center/cover no-repeat;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  opacity:0;
+  animation:fadeIn 1s 8.5s forwards;
+}
+
+.card{
+  width:min(90%,1200px);
+  min-height:80vh;
+  background:rgba(245,241,235,0.18);
+  backdrop-filter:blur(18px);
+  border-radius:25px;
+  padding:clamp(20px,4vw,40px);
+  position:relative;
+}
+
+.header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.header h4{
+  letter-spacing:2px;
+}
+
+.vertical-left,
+.vertical-right{
+  position:absolute;
+  top:50%;
+  transform:translateY(-50%) rotate(-90deg);
+  font-size:14px;
+}
+
+.vertical-left{left:-40px}
+.vertical-right{
+  right:-70px;
+  transform:translateY(-50%) rotate(90deg);
+}
+
+.content{
+  display:flex;
+  gap:40px;
+  align-items:center;
+  justify-content:space-between;
+  flex-wrap:wrap;
+}
+
+.text{
+  max-width:500px;
+}
+
+.text h1{
+  font-size:clamp(2.5rem,6vw,4rem);
+}
+
+.text span{
+  display:block;
+  margin-top:15px;
+}
+
+.image-box{
+  width:clamp(180px,30vw,260px);
+  height:clamp(180px,30vw,260px);
+  border-radius:20px;
+  overflow:hidden;
+  border:3px solid rgba(122,92,66,.4);
+}
+
+.image-box img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.buttons{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  justify-content:center;
+  margin-top:30px;
+}
+
+.btn{
+  padding:10px 20px;
+  border-radius:25px;
+  border:1px solid #4a90e2;
+  background:none;
+  color:#4a90e2;
+  cursor:pointer;
+  transition:.3s;
+  text-align:center;
+  min-width:120px;
+}
+
+.btn:hover{
+  background:#4a90e2;
+  color:white;
+}
+
+/* Panel */
+.panelle{
+  border: 2px solid #4a90e2;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  position:absolute;
+  top:100%;
+  left:50%;
+  transform:translateX(-50%) translateY(20px);
+  width:300px;
+  background:white;
+  border-radius:10px;
+  padding:20px;
+  opacity:0;
+  visibility:hidden;
+  transition:.4s;
+  z-index:100;
+}
+
+#JJ1:checked ~ .panelle,
+#JJ2:checked ~ .panelle,
+#JJ3:checked ~ .panelle{
+  opacity:1;
+  visibility:visible;
+  transform:translateX(-50%) translateY(-20px);
+}
+
+/* Overlay */
+.overlay{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.5);
+  z-index:50;
+}
+
+#JJ1:checked ~ .overlay,
+#JJ2:checked ~ .overlay,
+#JJ3:checked ~ .overlay{
+  display:block;
+}
+.btn-primary { 
+  background-color: #4a90e2;
+   color: white;
+ } 
+.btn-primary:hover { 
+  background-color: #357abd;
+   transform: translateY(-2px); 
+} 
+.btn-secondary { background-color: #6c757d;
+   color: white;
+ } 
+.btn-secondary:hover { background-color: burlywood;
+   transform: translateY(-2px); 
+  } 
+.btn-tricery { background-color: #6c757d;
+   color: white;
+   } 
+.btn-tr icery:hover {
+   background:linear-gradient(135deg, #1e242d 0%, #01132b 50%, #0f335e 100%); 
+  transform: translateY(-2px);
+}
+.buttons-group{
+  display:flex;
+  flex-wrap:wrap;
+  gap:20px;
+  justify-content:center;
+}
+
+.btn-wrapper{
+  position:relative;
+}
+
+/* Liaison correcte checkbox → panel */
+.btn-wrapper input:checked ~ .panelle{
+  opacity:1;
+  visibility:visible;
+  transform:translateX(-50%) translateY(-20px);
+}
+
+/* Overlay individuel */
+.btn-wrapper input:checked ~ .overlay{
+  display:block;
+}
+
+/* Desktop */
+.panelle{
+  left:50%;
+}
+
+/* Mobile */
+@media(max-width:768px){
+  .panelle{
+    position:fixed;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    width:90%;
+    max-width:380px;
+  }
+
+  .btn-wrapper input:checked ~ .panelle{
+    transform:translate(-50%,-50%);
+  }
+}
+
+/* ================= MOBILE ================= */
+@media(max-width:768px){
+
+  .vertical-left,
+  .vertical-right{
+    display:none;
+  }
+
+  .content{
+    flex-direction:column;
+    text-align:center;
+  }
+
+  .panelle{
+    position:fixed;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    width:90%;
+    max-width:380px;
+  }
+
+  #JJ1:checked ~ .panelle,
+   #JJ1:checked ~ .panelle,
+    #JJ1:checked ~ .panelle{
+    transform:translate(-50%,-50%);
+  }
+
+  .buttons{
+    flex-direction:column;
+  }
+
+  .btn{
+    width:100%;
+  }
+}
+
+/* ================= ANIMATIONS ================= */
+@keyframes fadeOut{to{opacity:0;visibility:hidden}}
+@keyframes fadeIn{to{opacity:1}}
+@keyframes slideUp{to{opacity:1;transform:translateY(0)}}
+@keyframes introHide{to{opacity:0;visibility:hidden}}
+@keyframes logoEntrance{
+  from{opacity:0;transform:scale(.1) rotate(-180deg)}
+  to{opacity:1;transform:scale(1) rotate(0)}
+}
+@keyframes logoScaleUp{to{transform:scale(1.5)}}
+@keyframes logoPulse{50%{transform:scale(1.6)}}
+@keyframes flareAppear{to{opacity:.6}}
+@keyframes flarePulse{to{opacity:.3}}
+@keyframes breakAppear{to{opacity:1}}
+@keyframes breakLine{to{opacity:0;transform:scale(.1)}}
+
+</style>
+</head>
+
+<body>
+
+<div class="intro-container">
+  <div class="black-screen"></div>
+  <div class="light-flare"></div>
+
+  <div class="university-logo">
+    <img src="OIP.webp">
+  </div>
+
+  <div class="logo-breakup">
+    <div class="break-line line-v line1"></div>
+    <div class="break-line line-v line2"></div>
+    <div class="break-line line-v line3"></div>
+    <div class="break-line line-v line4"></div>
+    <div class="break-line line-h line5"></div>
+    <div class="break-line line-h line6"></div>
+    <div class="break-line line-h line7"></div>
+    <div class="break-line line-h line8"></div>
+  </div>
+
+  <div class="homepage">
+    <img src="OIP.webp" style="width:100px;border-radius:50%">
+    <h1>Université Alioune Diop de Bambey</h1>
+    <div class="subtitle">UADB</div>
+    <div class="motto">« L'Excellence est ma Constance, l'Éthique ma Vertu »</div>
+  </div>
+</div>
+
+<div class="main-app">
+  <div class="card">
+
+    <div class="header">
+      <h4>BIENVENUE</h4>
+    </div>
+
+    <div class="vertical-left">__________________</div>
+    <div class="vertical-right">Alioune Diop University</div>
+
+    <div class="content">
+      <div class="text">
+        <h1>UADB<br>EXAM</h1>
+        <span>L'Excellence est ma constance, l'Éthique est ma vertu</span>
+      </div>
+
+      <div class="image-box">
+        <img src="logo uad.png">
+      </div>
+    </div>
+
+   <div class="buttons-group">
+
+  <div class="btn-wrapper">
+    <input type="checkbox" id="JJ1" hidden>
+
+    <label for="JJ1" class="btn">SATIC</label>
+
+    <div class="panelle">
+      <a class="btn btn-primary" href="page1.html">SRT</a>
+      <a class="btn btn-secondary" href="page2.html">D2A</a>
+      <a class="btn btn-tricery" href="#">MPCI</a>
+    </div>
+
+    <label for="JJ1" class="overlay"></label>
+  </div>
+
+  <div class="btn-wrapper">
+    <input type="checkbox" id="JJ2" hidden>
+
+    <label for="JJ2" class="btn">ECOMIJ</label>
+
+    <div class="panelle">
+      <a class="btn btn-primary" href="page4.html">SG</a>
+      <a class="btn btn-secondary" href="page8.html">ECOMA</a>
+      <a class="btn btn-tricery" href="page6.html">IJ</a>
+    </div>
+
+    <label for="JJ2" class="overlay"></label>
+  </div>
+
+  <div class="btn-wrapper">
+    <input type="checkbox" id="JJ3" hidden>
+
+    <label for="JJ3" class="btn">SDD</label>
+
+    <div class="panelle">
+      <a class="btn btn-primary" href="page5.html">SECOM</a>
+      <a class="btn btn-secondary" href="page7.html">DD</a>
+    </div>
+
+    <label for="JJ3" class="overlay"></label>
+  </div>
+</div>
+ <footer class="bio">
+      <li>Mouhamed FALL (D2A) </li> 
+      <li>Aliou sow (D2A)</li>
+     <li> Mouhamed seck (D2A)</li>
+      <li>Adjia Aissatou Mbengue (D2A)</li>
+     <li>Aliou pene (D2A)</li> 
+  </footer>
+</body>
+</html>

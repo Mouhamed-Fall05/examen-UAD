@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+   <link rel="stylesheet" href="srt.css">
+</head>
+<body>
+
+<div class="contact-section">
+
+  <h2>Partager une épreuve</h2>
+
+  <form onsubmit="sendToWhatsApp(event)">
+
+    <input type="text" id="nom" placeholder="Votre nom complet" required>
+
+    <input type="text" id="filiere" placeholder="Votre filière (ex: D2A, SRT...)" required>
+
+    <input type="text" id="matiere" placeholder="Matière et année (ex: Maths 2023)" required>
+
+    <input type="file" required>
+
+    <textarea id="message" placeholder="Informations supplémentaires..." rows="4"></textarea>
+
+    <button type="submit" class="btn btn-primary">
+      Envoyer via WhatsApp
+    </button>
+
+  </form>
+
+  <p class="info-text">
+    Après l’ouverture de WhatsApp, veuillez joindre le fichier manuellement.
+  </p>
+
+</div>
+
+<script>
+function sendToWhatsApp(event){
+  event.preventDefault();
+
+  let nom = document.getElementById("nom").value;
+  let filiere = document.getElementById("filiere").value;
+  let matiere = document.getElementById("matiere").value;
+  let message = document.getElementById("message").value;
+
+  let numero = "221705541540";
+
+  let texte =
+    "Bonjour, je souhaite partager une épreuve.\n\n" +
+    "Nom : " + nom + "\n" +
+    "Filière : " + filiere + "\n" +
+    "Matière : " + matiere + "\n" +
+    "Message : " + message + "\n\n" +
+    "Je joins le fichier ci-dessous.";
+
+  let url = "https://wa.me/" + numero + "?text=" + encodeURIComponent(texte);
+
+  window.open(url, "_blank");
+}
+</script>
+</body>
+</html>

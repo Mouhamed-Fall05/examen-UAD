@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Épreuves – Développement Web & Mobile</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bleu:#2071b3;
+  --bleu-fonce:#154a79;
+  --marron:#8b5a2b;
+  --beige:#f5e9d7;
+  --texte:#2b2b2b;
+}
+
+body{
+  font-family:'Inter',sans-serif;
+  background:#f2e7d8;
+  color:var(--texte);
+  min-height:100vh;
+}
+
+/* HEADER */
+header{
+  text-align:center;
+  padding:40px 20px;
+  background:linear-gradient(135deg,#fff,var(--beige));
+  border-bottom:4px solid var(--bleu);
+}
+header h1{color:var(--bleu-fonce)}
+header p{color:var(--marron)}
+
+/* GRILLE HOME - 3x3 PARFAITE */
+#home{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  grid-template-rows:repeat(3,1fr);
+  gap:25px;
+  max-width:1000px;
+  margin:40px auto;
+  padding:20px;
+}
+
+/* CARD */
+.card{
+  position:relative;
+  border-radius:14px;
+  padding:25px;
+  text-align:center;
+  background:linear-gradient(135deg,rgba(255,255,255,.9),rgba(245,233,215,.95));
+  box-shadow:0 10px 25px rgba(0,0,0,0.15), 0 4px 10px rgba(0,0,0,0.10);
+  overflow:hidden;
+  transition: transform 0.3s, box-shadow 0.4s, background 0.4s;
+}
+
+.card::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:url("logo.jpg.jpeg") center/100% 100% no-repeat;
+  opacity:.18;
+}
+
+.card::after{
+  content:"";
+  position:absolute;
+  inset:-2px;
+  border-radius:16px;
+  background:linear-gradient(120deg,
+    transparent,
+    rgba(32,113,179,.35),
+    rgba(139,90,43,.35),
+    transparent
+  );
+  opacity:0;
+  transition:.4s;
+}
+
+.card:hover{
+  transform:translateY(-6px);
+  box-shadow:0 15px 35px rgba(32,113,179,0.25),
+             0 6px 15px rgba(139,90,43,0.2);
+}
+
+.card:hover::after{
+  opacity:1;
+}
+
+.card a{
+  text-decoration:none;
+  color:inherit;
+  position:relative;
+  z-index:1;
+}
+
+.card h3{color:var(--bleu-fonce);margin-bottom:8px}
+.card span{
+  background:var(--marron);
+  color:#fff;
+  padding:6px 14px;
+  border-radius:20px;
+  font-size:13px;
+}
+
+/* SECTIONS MODALES */
+.section{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.6);
+  z-index:100;
+}
+.section:target{display:flex}
+
+/* BOX */
+.box{
+  background:#fff;
+  margin:auto;
+  width:90%;
+  max-width:700px;
+  padding:30px;
+  border-radius:14px;
+  border:3px solid var(--bleu);
+  text-align:center;
+}
+.box h2{
+  color:var(--bleu-fonce);
+  margin-bottom:18px;
+}
+
+/* PARAGRAPHE IA */
+.ia-note{
+  font-size:14px;
+  color:#555;
+  line-height:1.6;
+  margin-bottom:18px;
+}
+
+/* BOUTON */
+.epreuve{
+  display:block;
+  background:var(--bleu);
+  color:#fff;
+  padding:16px;
+  margin:15px 0;
+  text-align:center;
+  border-radius:10px;
+  font-weight:600;
+  text-decoration:none;
+  font-size:18px;
+  transition:.3s;
+}
+.epreuve:hover{background:var(--marron)}
+
+.back{
+  margin-top:20px;
+}
+.back a{
+  color:var(--marron);
+  text-decoration:none;
+  font-weight:600;
+}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  #home{grid-template-columns:repeat(2,1fr); grid-template-rows:auto;}
+}
+@media(max-width:600px){
+  #home{grid-template-columns:1fr; grid-template-rows:repeat(9,auto);}
+}
+
+/* HERO NEXTGEN */
+.nextgen-hero{
+  background:
+    radial-gradient(circle at top, #ffffff 0%, var(--beige) 55%, #e7d9c2 100%);
+  border-bottom:6px solid var(--bleu);
+  padding:80px 20px 90px;
+}
+.hero-inner{
+  max-width:1100px;
+  margin:auto;
+  text-align:center;
+}
+.hero-badge{
+  display:inline-block;
+  padding:8px 22px;
+  border:2px solid var(--bleu);
+  border-radius:30px;
+  font-weight:700;
+  letter-spacing:2px;
+  font-size:13px;
+  color:var(--bleu-fonce);
+  margin-bottom:25px;
+}
+.nextgen-hero h1{
+  font-size:48px;
+  line-height:1.2;
+  color:var(--bleu-fonce);
+  margin-bottom:20px;
+}
+.hero-sub{
+  font-size:18px;
+  color:#4b4b4b;
+  line-height:1.7;
+  max-width:700px;
+  margin:0 auto 40px;
+}
+.hero-line{
+  width:120px;
+  height:4px;
+  background:var(--marron);
+  margin:0 auto 40px;
+}
+
+/* TEXTE LATÉRAL */
+.side-text{
+  position:fixed;
+  top:0;
+  width:60px;
+  height:100vh;
+  overflow:hidden;
+  z-index:5;
+  pointer-events:none;
+  opacity:0.35;
+}
+.side-text span{
+  position:absolute;
+  left:50%;
+  transform:translateX(-50%) rotate(-90deg);
+  white-space:nowrap;
+  font-size:16px;
+  font-weight:700;
+  letter-spacing:4px;
+  color:var(--bleu-fonce);
+}
+.side-text.left{left:0}
+.side-text.left span{animation:scrollUp 35s linear infinite;}
+.side-text.right{right:0}
+.side-text.right span{animation:scrollDown 40s linear infinite;}
+@keyframes scrollUp{from{top:110%}to{top:-120%}}
+@keyframes scrollDown{from{top:-120%}to{top:110%}}
+</style>
+</head>
+
+<body>
+ <header class="entete">
+    <a href="page2.html">
+        <button class="fermer"> < ACCEUILLE </button>
+    </a>
+  </header>
+<header class="nextgen-hero">
+  <div class="hero-inner">
+    <div class="hero-badge">NEXTGEN CREW</div>
+    <h1>Héritage académique<br>pour les générations futures</h1>
+    <p class="hero-sub">
+      Examens et entraînement intellectuel.<br>
+      Comprendre, analyser, chercher par soi-même.
+      <br>
+      Les solutions ne sont pas fournies. Les étudiants sont encouragés à analyser les énoncés et à effectuer des recherches (cours, documentation, outils d'IA) pour progresser.
+    </p>
+    <div class="hero-line"></div>
+  </div>
+</header>
+
+<header>
+  <h1>Épreuves – Développement Web & Mobile</h1>
+  <p>Clique sur une matière</p>
+</header>
+
+<section id="home">
+  <div class="card"><a href="#algo"><h3>Algorithme</h3><span>LICENCE 1</span></a></div>
+  <div class="card"><a href="#htmlcss"><h3>HTML / CSS</h3><span>LICENCE 1</span></a></div>
+  <div class="card"><a href="#ato"><h3>ATO</h3><span>LICENCE 1</span></a></div>
+  <div class="card"><a href="#reseaux"><h3>Réseaux</h3><span>LICENCE 1</span></a></div>
+  <div class="card"><a href="#compta"><h3>Comptabilité</h3><span>LICENCE 1</span></a></div>
+  <div class="card"><a href="#algebre"><h3>Algèbre</h3><span>LICENCE 1</span></a></div>
+  <div class="card"><a href="#analyse"><h3>Analyse</h3><span>LICENCE 1</span></a></div>
+  <div class="card"><a href="#probabilite"><h3>Probabilité</h3><span>LICENCE 1</span></a></div>
+  <div class="card"><a href="#SE"><h3>Système d'exploitation</h3><span>LICENCE 1</span></a></div>
+</section>
+
+<!-- TES LIENS EXACTS INCHANGÉS -->
+<section class="section" id="algo">
+  <div class="box">
+    <h2>Algorithme</h2>
+    <p class="ia-note">
+      Les étudiants sont encouragés à réfléchir et à développer leurs propres solutions.
+    </p>
+    <a class="epreuve" href="algo.html">📘 Examen</a>
+    <div class="back"><a href="#home">← Retour</a></div>
+  </div>
+</section>
+
+<section class="section" id="htmlcss">
+  <div class="box">
+    <h2>HTML / CSS</h2>
+    <p class="ia-note">Recherche, expérimentation et utilisation raisonnée des outils modernes recommandées.</p>
+    <a class="epreuve" href="htmlcss.html">📘 Examen</a>
+    <div class="back"><a href="#home">← Retour</a></div>
+  </div>
+</section>
+
+<section class="section" id="ato">
+  <div class="box">
+    <h2>ATO</h2>
+    <p class="ia-note">Comprendre les notions avant application, en s'appuyant sur les ressources disponibles.</p>
+    <a class="epreuve" href="ato.html">📘 Examen</a>
+    <div class="back"><a href="#home">← Retour</a></div>
+  </div>
+</section>
+
+<section class="section" id="reseaux">
+  <div class="box">
+    <h2>Réseaux</h2>
+    <p class="ia-note">Tester, analyser et documenter avant de conclure.</p>
+    <a class="epreuve" href="reseaux.html">📘 Examen</a>
+    <div class="back"><a href="#home">← Retour</a></div>
+  </div>
+</section>
+
+<section class="section" id="compta">
+  <div class="box">
+    <h2>Comptabilité</h2>
+    <p class="ia-note">Approche méthodique et recherches personnelles recommandées.</p>
+    <a class="epreuve" href="compta.html">📘 Examen</a>
+    <div class="back"><a href="#home">← Retour</a></div>
+  </div>
+</section>
+
+<section class="section" id="algebre">
+  <div class="box">
+    <h2>Algèbre</h2>
+    <p class="ia-note">Raisonnement, démonstration et pratique sont essentiels.</p>
+    <a class="epreuve" href="algebre.html">📘 Examen</a>
+    <div class="back"><a href="#home">← Retour</a></div>
+  </div>
+</section>
+
+<section class="section" id="analyse">
+  <div class="box">
+    <h2>Analyse</h2>
+    <p class="ia-note">Comprendre les méthodes avant leur application.</p>
+    <a class="epreuve" href="analyse.html">📘 Examen</a>
+    <div class="back"><a href="#home">← Retour</a></div>
+  </div>
+</section>
+
+<section class="section" id="probabilite">
+  <div class="box">
+    <h2>Probabilité</h2>
+    <p class="ia-note">Raisonnement logique et recherches personnelles encouragés.</p>
+    <a class="epreuve" href="probabilite.html">📘 Examen</a>
+    <div class="back"><a href="#home">← Retour</a></div>
+  </div>
+</section>
+
+<section class="section" id="SE">
+  <div class="box">
+    <h2>Système d'exploitation</h2>
+    <p class="ia-note">Analyse du sujet et approfondissement par la recherche.</p>
+    <a class="epreuve" href="SE.html">📘 Examen</a>
+    <div class="back"><a href="#home">← Retour</a></div>
+  </div>
+</section>
+
+<div class="nextgen-text" style="bottom:22px; left:170px; color:#472c1a; font-weight:700;">Next-Gen Crew</div>
+
+<div class="side-text left">
+  <span>NEXTGEN CREW • RIGUEUR • MÉTHODE • HÉRITAGE •</span>
+</div>
+<div class="side-text right">
+  <span>DISCIPLINE • FONDATIONS • EXCELLENCE •</span>
+</div>
+<p>Nous, étudiants en informatique de l’Université Alioune Diop de Bambey, avons mis en place cette plateforme dans le but d’accompagner et de soutenir les étudiants dans leurs révisions ainsi que dans l’apprentissage des différentes matières.
+Bien que nous ayons fait de notre mieux pour rassembler un maximum de sujets d’examens, certains documents demeurent incomplets et certaines filières ne disposent pas encore de ressources suffisantes.
+C’est pourquoi nous invitons chaleureusement tous les étudiants à contribuer en partageant les examens et documents académiques dont ils disposent, afin d’enrichir cette plateforme et de favoriser l’entraide au sein de notre communauté universitaire.</p>
+ <button class="li" onclick="location.href='admin1.html'">envoyer les epreuves</button>
+</body>
+</body>
+</html>
